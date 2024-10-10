@@ -45,6 +45,7 @@ public class DbManager extends SQLiteOpenHelper {
         db.execSQL("create table tbl_tkquanli" +
                 " (TaiKhoan text primary key, " +
                 "MatKhau text not null);");
+            //lienket den git
     }
 
     @Override
