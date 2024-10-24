@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/lightGrey">
+    android:background="@color/lightGrey"
+    android:id="@+id/main">
 
     <TextView
         android:id="@+id/textView14"
@@ -31,9 +32,11 @@
             android:layout_height="wrap_content"
             android:text="CheckBox" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
+            android:id="@+id/lvCart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
 
     </LinearLayout>
 

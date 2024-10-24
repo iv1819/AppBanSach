@@ -1,16 +1,14 @@
-package com.example.appbansach;
+package com.example.appbansach.apdapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import com.example.appbansach.R;
+import com.example.appbansach.model.SanPham;
 
 import java.util.List;
 

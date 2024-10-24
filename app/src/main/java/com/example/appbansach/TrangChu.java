@@ -11,6 +11,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.appbansach.apdapter.GenresAdapter;
+import com.example.appbansach.apdapter.ProductAdapter;
+import com.example.appbansach.model.SanPham;
+
 import java.util.ArrayList;
 import java.util.List;
 

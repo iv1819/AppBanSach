@@ -1,4 +1,4 @@
-package com.example.appbansach;
+package com.example.appbansach.model;
 
 public class SanPham {
     private int maSanPham;
