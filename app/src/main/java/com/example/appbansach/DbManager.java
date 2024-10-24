@@ -1,6 +1,7 @@
 package com.example.appbansach;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -53,4 +54,14 @@ public class DbManager extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS tbl_tacgia");
         onCreate(db);
     }
+    //đăng nhập người dùng
+    public boolean loginUser(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM tbl_tkkhachhang WHERE TaiKhoan = ? AND MatKhau = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+        boolean loginSuccessful = cursor.getCount() > 0;
+        cursor.close();
+        return loginSuccessful;
+    }
+
 }
