@@ -47,9 +47,9 @@ public class CartAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.cart_items, viewGroup, false);
         }
 
-        ImageView imgAnhSanPham = view.findViewById(R.id.imgPrd);
-        TextView txtTenSanPham = view.findViewById(R.id.txtNamePD);
-        TextView txtGiaBan = view.findViewById(R.id.txtPricePD);
+        ImageView imgAnhSanPham = view.findViewById(R.id.imgPCart);
+        TextView txtTenSanPham = view.findViewById(R.id.txtNameCart);
+        TextView txtGiaBan = view.findViewById(R.id.txtPriceCart);
 
         SanPham sanPham = sanPhamList.get(i);
 
