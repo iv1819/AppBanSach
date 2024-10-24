@@ -6,14 +6,14 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgPrd"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_margin="10dp"
         app:srcCompat="@drawable/book2" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/txtPricePD"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -23,7 +23,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/txtNamePD"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

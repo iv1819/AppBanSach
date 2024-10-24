@@ -1,51 +1,90 @@
 package com.example.appbansach;
 
 public class SanPham {
-    String maSp, tenSp, maDm, maNcc, theLoai, maTg,namXb;
-    int gia, sl;
+    private int maSanPham;
+    private String tenSanPham;
+    private byte[] anhSanPham;
+    private String nhaCungCap;
+    private String danhMuc;
+    private String tacGia;
+    private int soLuong;
+    private int giaBan;
+    private String theLoai;
 
-    public SanPham(String maSp, String tenSp, String maDm, String maNcc, String theLoai, String maTg, String namXb, int gia, int sl) {
-        this.maSp = maSp;
-        this.tenSp = tenSp;
-        this.maDm = maDm;
-        this.maNcc = maNcc;
+    public SanPham(int maSanPham, String tenSanPham, byte[] anhSanPham, String nhaCungCap, String danhMuc, String tacGia, int soLuong, int giaBan, String theLoai) {
+        this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.anhSanPham = anhSanPham;
+        this.nhaCungCap = nhaCungCap;
+        this.danhMuc = danhMuc;
+        this.tacGia = tacGia;
+        this.soLuong = soLuong;
+        this.giaBan = giaBan;
         this.theLoai = theLoai;
-        this.maTg = maTg;
-        this.namXb = namXb;
-        this.gia = gia;
-        this.sl = sl;
     }
 
-    public String getMaSp() {
-        return maSp;
+    public int getMaSanPham() {
+        return maSanPham;
     }
 
-    public void setMaSp(String maSp) {
-        this.maSp = maSp;
+    public void setMaSanPham(int maSanPham) {
+        this.maSanPham = maSanPham;
     }
 
-    public String getTenSp() {
-        return tenSp;
+    public String getTenSanPham() {
+        return tenSanPham;
     }
 
-    public void setTenSp(String tenSp) {
-        this.tenSp = tenSp;
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
     }
 
-    public String getMaDm() {
-        return maDm;
+    public byte[] getAnhSanPham() {
+        return anhSanPham;
     }
 
-    public void setMaDm(String maDm) {
-        this.maDm = maDm;
+    public void setAnhSanPham(byte[] anhSanPham) {
+        this.anhSanPham = anhSanPham;
     }
 
-    public String getMaNcc() {
-        return maNcc;
+    public String getNhaCungCap() {
+        return nhaCungCap;
     }
 
-    public void setMaNcc(String maNcc) {
-        this.maNcc = maNcc;
+    public void setNhaCungCap(String nhaCungCap) {
+        this.nhaCungCap = nhaCungCap;
+    }
+
+    public String getDanhMuc() {
+        return danhMuc;
+    }
+
+    public void setDanhMuc(String danhMuc) {
+        this.danhMuc = danhMuc;
+    }
+
+    public String getTacGia() {
+        return tacGia;
+    }
+
+    public void setTacGia(String tacGia) {
+        this.tacGia = tacGia;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public int getGiaBan() {
+        return giaBan;
+    }
+
+    public void setGiaBan(int giaBan) {
+        this.giaBan = giaBan;
     }
 
     public String getTheLoai() {
@@ -54,37 +93,5 @@ public class SanPham {
 
     public void setTheLoai(String theLoai) {
         this.theLoai = theLoai;
-    }
-
-    public String getMaTg() {
-        return maTg;
-    }
-
-    public void setMaTg(String maTg) {
-        this.maTg = maTg;
-    }
-
-    public String getNamXb() {
-        return namXb;
-    }
-
-    public void setNamXb(String namXb) {
-        this.namXb = namXb;
-    }
-
-    public int getGia() {
-        return gia;
-    }
-
-    public void setGia(int gia) {
-        this.gia = gia;
-    }
-
-    public int getSl() {
-        return sl;
-    }
-
-    public void setSl(int sl) {
-        this.sl = sl;
     }
 }

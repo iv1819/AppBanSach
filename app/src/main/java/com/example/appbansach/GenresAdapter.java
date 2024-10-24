@@ -1,9 +1,12 @@
 package com.example.appbansach;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,45 +14,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenreViewHolder> {
-
+public class GenresAdapter extends BaseAdapter {
     Context context;
-    List<String> genrelist;
+    List<SanPham> list;
 
-    public GenresAdapter(Context context, List<String> gList) {
+    public GenresAdapter(Context context, List<SanPham> list) {
         this.context = context;
-        this.genrelist = gList;
-    }
-
-    @NonNull
-    @Override
-    public GenreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(context).inflate(R.layout.genres_holder_layout, parent, false);
-
-        return new GenreViewHolder(view);
+        this.list = list;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GenreViewHolder holder, int position) {
-
-        holder.categoryImage.setImageResource(genrelist.get(position).getImageurl());
-
+    public int getCount() {
+        return list.size();
     }
 
     @Override
-    public int getItemCount() {
-        return genrelist.size();
+    public Object getItem(int position) {
+        return null;
     }
 
-    public  static class GenreViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
 
-        TextView genreName;
-
-
-        public GenreViewHolder(@NonNull View itemView) {
-            super(itemView);
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        if(view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.genres_holder_layout, viewGroup, false);
         }
+        TextView txtGen = view.findViewById(R.id.txtName);
+        SanPham sp = list.get(i);
+        txtGen.setText(sp.getTheLoai());
+        return view;
     }
-
 }
