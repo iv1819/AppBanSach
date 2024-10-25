@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -69,6 +70,14 @@ public class TrangChu extends AppCompatActivity {
             Intent intent = new Intent(TrangChu.this, TrangGioHang.class);
             startActivity(intent);
             finish();
+        });
+        ImageView imageView2 = findViewById(R.id.imageView2);
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TrangChu.this, TimKiem.class);
+                startActivity(intent);
+            }
         });
     }
 
