@@ -1,6 +1,8 @@
 package com.example.appbansach;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -10,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Random;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AppBanSach.db"; // Chỉ cần tên tệp
@@ -81,7 +84,68 @@ public class Database extends SQLiteOpenHelper {
             Log.d("Database", "Cơ sở dữ liệu đã được đóng.");
         }
     }
+    public boolean isCustomerIdExists(String maKhachHang) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM KhachHang WHERE maKhachHang = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{maKhachHang});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close(); // Đừng quên đóng con trỏ
+        return exists;
+    }
 
+
+    // Cập nhật phương thức generateCustomerId
+    public String generateCustomerId() {
+        Random random = new Random();
+        String maKhachHang;
+        do {
+            int randomNum = random.nextInt(100000); // Tạo số ngẫu nhiên từ 0 đến 99999
+            maKhachHang = "KH" + randomNum; // Tạo mã khách hàng
+        } while (isCustomerIdExists(maKhachHang)); // Lặp lại nếu mã khách hàng đã tồn tại
+        return maKhachHang; // Trả về mã khách hàng
+    }
+
+    //thêm khách hàng mới
+    public String  addCustomer(String tenKhachHang, String soDienThoai, String diaChi) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String maKhachHang = generateCustomerId(); // Tạo mã khách hàng
+
+        values.put("maKhachHang", maKhachHang);
+        values.put("tenKhachHang", tenKhachHang);
+        values.put("soDienThoai", soDienThoai);
+        values.put("diaChi", diaChi);
+
+        long result = db.insert("KhachHang", null, values);
+        db.close(); // Đóng cơ sở dữ liệu sau khi thực hiện
+
+        return result != -1 ? maKhachHang : null; // Trả về mã khách hàng nếu thêm thành công, null nếu không
+    }
+    public boolean isAccountExists(String taiKhoan) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM TaiKhoanKhachHang WHERE taiKhoan = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{taiKhoan});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close(); // Đừng quên đóng con trỏ
+        return exists;
+    }
+
+    public boolean addtaikhoanuser(String tenKhachHang, String matKhau, String maKhachHang) {
+        if (isAccountExists(tenKhachHang)) {
+            return false; // Tài khoản đã tồn tại
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("taiKhoan", tenKhachHang);
+        values.put("matKhau", matKhau);
+        values.put("maKhachHang", maKhachHang);
+
+        long result = db.insert("TaiKhoanKhachHang", null, values);
+        db.close(); // Đóng cơ sở dữ liệu sau khi thực hiện
+
+        return result != -1; // Trả về true nếu thêm thành công, false nếu không
+    }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -92,4 +156,5 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 }
