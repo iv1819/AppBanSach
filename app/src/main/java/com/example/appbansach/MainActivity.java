@@ -15,12 +15,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.appbansach.apdapter.BannerAdapter;
 import com.example.appbansach.model.DangKyUser;
+import com.example.appbansach.model.DangNhapQLy;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnDangNhap;
     Button btnDangKy;
+    Button btnDangNhapQLy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         });
         String customerId = "KH01";
         MyApplication.getInstance().initializeGioHang(customerId);
+
+        btnDangNhapQLy = findViewById(R.id.btnDangNhapQly);
+        btnDangNhapQLy.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, DangNhapQLy.class);
+            startActivity(intent);
+        });
     }
 
 

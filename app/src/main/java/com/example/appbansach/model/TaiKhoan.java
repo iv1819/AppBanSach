@@ -23,4 +23,16 @@ public class TaiKhoan {
             return false;
         }
     }
+
+    public boolean kiemtraDangNhapQLy(String taiKhoan, String matKhau){
+        SQLiteDatabase db = database.openDatabase();
+        String query = "SELECT * FROM TaiKhoanQuanLy WHERE taiKhoan = ? AND matKhau = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{taiKhoan, matKhau});
+        if(cursor.getCount() != 0 ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
