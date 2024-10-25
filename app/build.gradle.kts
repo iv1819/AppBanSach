@@ -32,7 +32,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.imageslideshow)
+    implementation(libs.dotsindicator)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -40,4 +41,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }
