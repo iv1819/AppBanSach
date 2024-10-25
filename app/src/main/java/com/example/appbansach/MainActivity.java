@@ -32,12 +32,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         btnDangNhap = findViewById(R.id.btnDangNhap);
-        btnDangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TrangChu.class);
-                startActivity(intent);
-            }
+        btnDangNhap.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, TrangChu.class);
+            startActivity(intent);
         });
     }
 

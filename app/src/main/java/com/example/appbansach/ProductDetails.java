@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.appbansach.model.SanPham;
+
 public class ProductDetails extends AppCompatActivity {
     TextView txtTenSanPham, txtGiaBan;
     ImageView imgAnhSanPham, imgBack;
@@ -28,25 +30,32 @@ public class ProductDetails extends AppCompatActivity {
         });
         imgBack = findViewById(R.id.imgBack);
 
-        // Nhận dữ liệu từ Intent
-        Intent intent = getIntent();
-        String tenSanPham = intent.getStringExtra("tenSanPham");
-        String giaBan = intent.getStringExtra("giaBan");
-        byte[] anhSanPham = intent.getByteArrayExtra("anhSanPham");
+        // Get the passed product object
+        SanPham selectedProduct = (SanPham) getIntent().getSerializableExtra("selected_product");
 
-        // Hiển thị dữ liệu
-        txtTenSanPham = findViewById(R.id.txtNamePDD);
-        txtGiaBan = findViewById(R.id.txtPrPDD);
-        imgAnhSanPham = findViewById(R.id.imgPdd);
+        // Populate your views with the product details
+        if (selectedProduct != null) {
+            ImageView imgAnhSanPham = findViewById(R.id.imgPdd);
+            TextView txtTenSanPham = findViewById(R.id.txtNamePDD);
+            TextView txtSoLuong = findViewById(R.id.txtSlPDD);
+            TextView txtTacGia = findViewById(R.id.txtTgPDD);
+            TextView txtGiaBan = findViewById(R.id.txtPrPDD);
 
-        txtTenSanPham.setText(tenSanPham);
-        txtGiaBan.setText(giaBan + "$");
+            byte[] anh = selectedProduct.getAnhSanPham();
+            Bitmap bitmap = getBitmapFromBytes(anh);
+            imgAnhSanPham.setImageBitmap(bitmap);
+            txtTenSanPham.setText(selectedProduct.getTenSanPham());
+            txtSoLuong.setText(String.format("Số lượng: %s", selectedProduct.getSoLuong()));
+            txtTacGia.setText(selectedProduct.getTacGia());
+            txtGiaBan.setText(String.format("%s$", selectedProduct.getGiaBan()));
+        }
 
-        // Hiển thị ảnh sản phẩm từ byte[]
-        Bitmap bitmap = BitmapFactory.decodeByteArray(anhSanPham, 0, anhSanPham.length);
-        imgAnhSanPham.setImageBitmap(bitmap);
         imgBack.setOnClickListener(v -> {
             finish();
         });
+    }
+    // Convert Byte to Bitmap
+    private Bitmap getBitmapFromBytes(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }

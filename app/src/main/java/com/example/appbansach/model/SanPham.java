@@ -1,6 +1,8 @@
 package com.example.appbansach.model;
 
-public class SanPham {
+import java.io.Serializable;
+
+public class SanPham implements Serializable {
     private int maSanPham;
     private String tenSanPham;
     private byte[] anhSanPham;
