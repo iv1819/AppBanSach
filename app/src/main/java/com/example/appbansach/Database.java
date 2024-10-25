@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Database extends SQLiteOpenHelper {
@@ -145,6 +147,20 @@ public class Database extends SQLiteOpenHelper {
         db.close(); // Đóng cơ sở dữ liệu sau khi thực hiện
 
         return result != -1; // Trả về true nếu thêm thành công, false nếu không
+    }
+
+    public List<String> timKiemSanPham(String tuKhoa) {
+        List<String> ketQua = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT tenSanPham FROM SanPham WHERE tenSanPham LIKE ?", new String[]{"%" + tuKhoa + "%"});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ketQua.add(cursor.getString(0)); // Thêm tên sản phẩm vào danh sách
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return ketQua;
     }
 
     @Override
