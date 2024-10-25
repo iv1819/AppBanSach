@@ -66,8 +66,9 @@ public class TrangChu extends AppCompatActivity {
 
         // Setup click listener for cart navigation
         cartna.setOnClickListener(view -> {
-            Intent intent = new Intent(TrangChu.this, GioHang.class);
+            Intent intent = new Intent(TrangChu.this, TrangGioHang.class);
             startActivity(intent);
+            finish();
         });
     }
 

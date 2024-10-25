@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, TrangChu.class);
             startActivity(intent);
         });
+        String customerId = "KH01";
+        MyApplication.getInstance().initializeGioHang(customerId);
     }
 
 

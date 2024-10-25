@@ -30,19 +30,17 @@ public class Database extends SQLiteOpenHelper {
     public void createDatabase(){
         boolean dbExist = checkDatabase();
 
-        if (dbExist) {
-            context.deleteDatabase(DATABASE_NAME);  // Xóa cơ sở dữ liệu cũ
-            Log.d("Database", "Cơ sở dữ liệu cũ đã bị xóa.");
-        }
-
-        // Sau đó sao chép cơ sở dữ liệu mới từ thư mục assets
-        this.getWritableDatabase();
-        try {
-            copyDatabase(); // Sao chép cơ sở dữ liệu từ assets
-            Log.d("Database", "Cơ sở dữ liệu mới đã được sao chép thành công.");
-        } catch (Exception e) {
-            Log.e("Database", "Lỗi khi sao chép cơ sở dữ liệu: " + e.getMessage());
-            throw new Error("Error copying database");
+        if (!dbExist) {
+            this.getWritableDatabase();
+            try {
+                copyDatabase(); // Sao chép cơ sở dữ liệu từ assets
+                Log.d("Database", "Cơ sở dữ liệu đã được sao chép thành công.");
+            } catch (Exception e) {
+                Log.e("Database", "Lỗi khi sao chép cơ sở dữ liệu: " + e.getMessage());
+                throw new Error("Error copying database");
+            }
+        } else {
+            Log.d("Database", "Cơ sở dữ liệu đã tồn tại.");
         }
     }
 

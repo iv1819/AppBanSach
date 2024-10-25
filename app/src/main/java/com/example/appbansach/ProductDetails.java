@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +15,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.appbansach.model.GioHang;
 import com.example.appbansach.model.SanPham;
 
 public class ProductDetails extends AppCompatActivity {
-    TextView txtTenSanPham, txtGiaBan;
-    ImageView imgAnhSanPham, imgBack;
+    ImageView imgBack;
+    Button themGioHang;
+    GioHang cart;
+    SanPham selectedProduct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +35,10 @@ public class ProductDetails extends AppCompatActivity {
             return insets;
         });
         imgBack = findViewById(R.id.imgBack);
-
+        themGioHang = findViewById(R.id.btnCart);
         // Get the passed product object
-        SanPham selectedProduct = (SanPham) getIntent().getSerializableExtra("selected_product");
+        selectedProduct = (SanPham) getIntent().getSerializableExtra("selected_product");
+        cart = MyApplication.getInstance().getGioHang();
 
         // Populate your views with the product details
         if (selectedProduct != null) {
@@ -52,6 +59,13 @@ public class ProductDetails extends AppCompatActivity {
 
         imgBack.setOnClickListener(v -> {
             finish();
+        });
+        themGioHang.setOnClickListener(v -> {
+            if (selectedProduct != null) {
+                // Thêm sản phẩm vào giỏ hàng
+                cart.addToCart(selectedProduct.getMaSanPham()); // Gọi phương thức thêm sản phẩm
+                Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
         });
     }
     // Convert Byte to Bitmap

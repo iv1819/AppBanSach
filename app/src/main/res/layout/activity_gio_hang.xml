@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
@@ -35,7 +35,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="546dp"
                 android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
@@ -50,7 +50,7 @@
                 <ListView
                     android:id="@+id/lvCart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
 
 
             </LinearLayout>
@@ -88,6 +88,7 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/CartToMainNav"
                         app:srcCompat="@drawable/btn_1" />
 
                     <TextView
@@ -112,6 +113,7 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/CartToUserNav"
                         app:srcCompat="@drawable/btn_4" />
 
                     <TextView
@@ -136,9 +138,11 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/CartToOrderNav"
                         app:srcCompat="@drawable/order_btn" />
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
