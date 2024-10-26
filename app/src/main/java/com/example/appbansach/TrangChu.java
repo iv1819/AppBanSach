@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,23 +11,16 @@ import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.appbansach.apdapter.BannerAdapter;
 import com.example.appbansach.apdapter.GenresAdapter;
 import com.example.appbansach.apdapter.ProductAdapter;
 import com.example.appbansach.model.Genre;
-import com.example.appbansach.model.GioHang;
 import com.example.appbansach.model.SanPham;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +71,13 @@ public class TrangChu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageView userNav = findViewById(R.id.userNav);
+        userNav.setOnClickListener(view -> {
+            Intent intent = new Intent(TrangChu.this, CustomUser.class);
+            startActivity(intent);
+        });
     }
+
 
     private void initImageSlider() {
         // Use the class member imageList

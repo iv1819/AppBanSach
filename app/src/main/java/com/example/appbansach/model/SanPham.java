@@ -1,6 +1,7 @@
 package com.example.appbansach.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class SanPham implements Serializable {
     private int maSanPham;
@@ -23,6 +24,21 @@ public class SanPham implements Serializable {
         this.soLuong = soLuong;
         this.giaBan = giaBan;
         this.theLoai = theLoai;
+    }
+
+    @Override
+    public String toString() {
+        return "SanPham{" +
+                "maSanPham=" + maSanPham +
+                ", tenSanPham='" + tenSanPham + '\'' +
+                ", anhSanPham=" + Arrays.toString(anhSanPham) +
+                ", nhaCungCap='" + nhaCungCap + '\'' +
+                ", danhMuc='" + danhMuc + '\'' +
+                ", tacGia='" + tacGia + '\'' +
+                ", soLuong=" + soLuong +
+                ", giaBan=" + giaBan +
+                ", theLoai='" + theLoai + '\'' +
+                '}';
     }
 
     public int getMaSanPham() {

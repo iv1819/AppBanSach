@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appbansach.Database;
 import com.example.appbansach.R;
+import com.example.appbansach.model.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,12 @@ public class TimKiem extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Lấy danh sách sản phẩm theo từ khóa
                 itemList.clear();
                 if (s.length() > 0) {
-                    itemList.addAll(database.timKiemSanPham(s.toString()));
+                    List<SanPham> sanPhamList = database.timKiemSanPham(s.toString());
+                    for (SanPham sanPham : sanPhamList) {
+                        itemList.add(sanPham.toString());
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -59,9 +62,11 @@ public class TimKiem extends AppCompatActivity {
         imageViewSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lấy danh sách sản phẩm theo từ khóa khi nhấn vào biểu tượng tìm kiếm
                 itemList.clear();
-                itemList.addAll(database.timKiemSanPham(edtTimKiem.getText().toString()));
+                List<SanPham> sanPhamList = database.timKiemSanPham(edtTimKiem.getText().toString());
+                for (SanPham sanPham : sanPhamList) {
+                    itemList.add(sanPham.toString());
+                }
                 adapter.notifyDataSetChanged();
             }
         });

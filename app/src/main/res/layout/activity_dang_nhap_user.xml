@@ -12,7 +12,7 @@
         android:layout_height="55dp"
         android:background="@color/red"
         android:gravity="center"
-        android:text="ĐĂNG NHẬP NGƯỜI DÙNG"
+        android:text="SIGN IN"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

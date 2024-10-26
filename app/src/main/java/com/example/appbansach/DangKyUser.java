@@ -1,4 +1,4 @@
-package com.example.appbansach.model;
+package com.example.appbansach;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.example.appbansach.Database;
-import com.example.appbansach.R;
 
 public class DangKyUser extends AppCompatActivity {
 
@@ -49,15 +46,15 @@ public class DangKyUser extends AppCompatActivity {
                     if (maKhachHang != null) {
                         boolean accountSuccess = database.addtaikhoanuser(tenKhachHang, matKhau, maKhachHang); // Thêm tài khoản
                         if (accountSuccess) {
-                            Toast.makeText(DangKyUser.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DangKyUser.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(DangKyUser.this, "Đăng ký tài khoản thất bại!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DangKyUser.this, "Failed!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(DangKyUser.this, "Đăng ký khách hàng thất bại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DangKyUser.this, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(DangKyUser.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DangKyUser.this, "Please enter all information!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".model.DangNhapQLy">
+    tools:context=".DangNhapQLy">
         <TextView
             android:id="@+id/tvLogin"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/red"
             android:gravity="center"
-            android:text="ĐĂNG NHẬP QUẢN LÝ"
+            android:text="SIGN IN"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

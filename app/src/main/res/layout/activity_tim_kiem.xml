@@ -15,11 +15,12 @@
 
         <EditText
             android:id="@+id/edtTimKiem"
-            android:layout_width="326dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
+            android:hint="Enter here!"
             android:inputType="text"
-            android:text="Name" />
+            android:minHeight="48dp" />
 
         <ImageView
             android:id="@+id/imageView3"

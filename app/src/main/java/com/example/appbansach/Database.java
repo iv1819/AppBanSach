@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.appbansach.model.SanPham;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -152,14 +154,23 @@ public class Database extends SQLiteOpenHelper {
         return result != -1; // Trả về true nếu thêm thành công, false nếu không
     }
 
-    public List<String> timKiemSanPham(String tuKhoa) {
-        List<String> ketQua = new ArrayList<>();
+    public List<SanPham> timKiemSanPham(String tuKhoa) {
+        List<SanPham> ketQua = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT tenSanPham FROM SanPham WHERE tenSanPham LIKE ?", new String[]{"%" + tuKhoa + "%"});
+        Cursor cursor = db.rawQuery("SELECT maSanPham, tenSanPham, maNhaCungCap, maDanhMuc, tacGia, soLuong, giaBan, maTheLoai FROM SanPham WHERE tenSanPham LIKE ?", new String[]{"%" + tuKhoa + "%"});
 
         if (cursor.moveToFirst()) {
             do {
-                ketQua.add(cursor.getString(0)); // Thêm tên sản phẩm vào danh sách
+                int maSanPham = cursor.getInt(0);
+                String tenSanPham = cursor.getString(1);
+                String maNhaCungCap = cursor.getString(2);
+                String maDanhMuc = cursor.getString(3);
+                String tacGia = cursor.getString(4);
+                int soLuong = cursor.getInt(5);
+                int giaBan = cursor.getInt(6);
+                String maTheLoai = cursor.getString(7);
+
+                ketQua.add(new SanPham(maSanPham, tenSanPham, null, maNhaCungCap, maDanhMuc, tacGia, soLuong, giaBan, maTheLoai));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -200,6 +211,57 @@ public class Database extends SQLiteOpenHelper {
             Log.d("ChiTietDonHang", "Thêm chi tiết đơn hàng thành công cho sản phẩm: " + maSanPham);
         }
         database.close();
+    }
+
+    public String[] getUserByCustomerId(String customerId) {
+        String[] userInfo = null; // Mảng để lưu thông tin người dùng
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT khachhang.sdt, khachhang.diachi, " +
+                "taikhoankhachhang.taikhoan, taikhoankhachhang.matkhau " +
+                "FROM khachhang " +
+                "JOIN taikhoankhachhang ON khachhang.makhachhang = taikhoankhachhang.makhachhang " +
+                "WHERE khachhang.makhachhang = ?"; // Sử dụng ? để tránh SQL Injection
+
+        Cursor cursor = db.rawQuery(query, new String[]{customerId});
+        if (cursor.moveToFirst()) {
+            userInfo = new String[4]; // Chỉ cần 4 phần tử
+            userInfo[0] = cursor.getString(0); // sdt
+            userInfo[1] = cursor.getString(1); // diachi
+            userInfo[2] = cursor.getString(2); // taikhoan
+            userInfo[3] = cursor.getString(3); // matkhau
+        }
+        cursor.close();
+        db.close();
+        return userInfo; // Trả về mảng thông tin người dùng
+    }
+    public void updateUser(String customerId, String phone, String address, String username, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Cập nhật bảng khachhang
+        ContentValues values = new ContentValues();
+        values.put("sdt", phone);
+        values.put("diachi", address);
+        db.update("khachhang", values, "makhachhang = ?", new String[]{customerId});
+
+        // Cập nhật bảng taikhoankhachhang
+        ContentValues accountValues = new ContentValues();
+        accountValues.put("taikhoan", username);
+        accountValues.put("matkhau", password);
+        db.update("taikhoankhachhang", accountValues, "makhachhang = ?", new String[]{customerId});
+
+        db.close();
+    }
+    public void deleteUser(String customerId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Xóa tài khoản trong bảng taikhoankhachhang
+        db.delete("taikhoankhachhang", "makhachhang = ?", new String[]{customerId});
+
+        // Xóa thông tin trong bảng khachhang
+        db.delete("khachhang", "makhachhang = ?", new String[]{customerId});
+
+        db.close();
     }
 
     @Override
