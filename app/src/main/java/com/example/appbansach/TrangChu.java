@@ -114,7 +114,7 @@ public class TrangChu extends AppCompatActivity {
                 } while (cursor.moveToNext());
             }
         } finally {
-            if (cursor != null) cursor.close(); // Always close the cursor
+            if (cursor != null) cursor.close();
         }
         runOnUiThread(() -> {
             genresAdapter = new GenresAdapter(this, theloaiList);

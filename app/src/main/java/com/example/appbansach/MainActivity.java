@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, DangKyUser.class);
             startActivity(intent);
         });
-        String customerId = "KH01";
-        MyApplication.getInstance().initializeGioHang(customerId);
+
 
         btnDangNhapQLy = findViewById(R.id.btnDangNhapQly);
         btnDangNhapQLy.setOnClickListener(view -> {

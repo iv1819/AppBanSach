@@ -13,15 +13,19 @@ public class TaiKhoan {
         database = new Database(context);
         database.createDatabase();
     }
-    public boolean kiemtraDangNhap(String taiKhoan, String matKhau){
+    public String kiemtraDangNhap(String taiKhoan, String matKhau){
         SQLiteDatabase db = database.openDatabase();
-        String query = "SELECT * FROM TaiKhoanKhachHang WHERE taiKhoan = ? AND matKhau = ?";
+        String maKhachHang = null;
+
+        String query = "SELECT maKhachHang FROM TaiKhoanKhachHang WHERE taiKhoan = ? AND matKhau = ?";
         Cursor cursor = db.rawQuery(query, new String[]{taiKhoan, matKhau});
-        if(cursor.getCount() != 0 ){
-            return true;
-        }else{
-            return false;
+        if (cursor.moveToFirst()) {
+            maKhachHang = cursor.getString(0);
         }
+        cursor.close();
+        database.close();
+
+        return maKhachHang;
     }
 
     public boolean kiemtraDangNhapQLy(String taiKhoan, String matKhau){

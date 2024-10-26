@@ -45,11 +45,12 @@ public class DangNhapUser extends AppCompatActivity {
         String sTaiKhoan = edtName.getText().toString().trim();
         String sMatKhau = edtPassword.getText().toString().trim();
 
-        // Kiểm tra thông tin đăng nhập
-        boolean kiemTra = taiKhoan.kiemtraDangNhap(sTaiKhoan, sMatKhau);
+        // Lấy mã khách hàng khi đăng nhập
+        String customerId = taiKhoan.kiemtraDangNhap(sTaiKhoan, sMatKhau);
 
-        if (kiemTra) {
+        if (customerId != null) {
             Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            MyApplication.getInstance().initializeGioHang(customerId);
             Intent intent = new Intent(DangNhapUser.this, TrangChu.class);
             startActivity(intent);
             finish();
