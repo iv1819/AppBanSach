@@ -1,4 +1,4 @@
-package com.example.appbansach.model;
+package com.example.appbansach;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.appbansach.DangNhapUser;
-import com.example.appbansach.R;
-import com.example.appbansach.TrangChu;
+import com.example.appbansach.model.TaiKhoan;
 
 public class DangNhapQLy extends AppCompatActivity {
 

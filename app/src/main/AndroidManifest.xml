@@ -14,19 +14,19 @@
         android:theme="@style/Theme.AppBanSach"
         tools:targetApi="31">
         <activity
+            android:name=".CustomUser"
+            android:exported="false" />
+        <activity
             android:name=".TrangThanhToan"
             android:exported="false" />
         <activity
             android:name=".TimKiem"
             android:exported="false" />
         <activity
-            android:name=".model.DangNhapQLy"
+            android:name=".DangNhapQLy"
             android:exported="false" />
         <activity
-            android:name=".model.DangKyQLy"
-            android:exported="false" />
-        <activity
-            android:name=".model.DangKyUser"
+            android:name=".DangKyUser"
             android:exported="false" />
         <activity
             android:name=".ForgotPass"

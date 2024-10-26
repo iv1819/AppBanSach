@@ -1,6 +1,7 @@
 package com.example.appbansach;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,15 +48,16 @@ public class DangNhapUser extends AppCompatActivity {
 
         // Lấy mã khách hàng khi đăng nhập
         String customerId = taiKhoan.kiemtraDangNhap(sTaiKhoan, sMatKhau);
-
+        MyApplication.getInstance().setCustomerID(customerId);
         if (customerId != null) {
-            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login Successfully!", Toast.LENGTH_SHORT).show();
             MyApplication.getInstance().initializeGioHang(customerId);
             Intent intent = new Intent(DangNhapUser.this, TrangChu.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
