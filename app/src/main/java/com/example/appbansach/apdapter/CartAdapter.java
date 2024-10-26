@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,17 +18,21 @@ import com.example.appbansach.R;
 import com.example.appbansach.model.GioHang;
 import com.example.appbansach.model.SanPham;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends BaseAdapter {
     private Context context;
     private List<SanPham> sanPhamList;
     private GioHang gioHang; // Tham chiếu đến giỏ hàng
-
+    private List<Integer> selectedItems; // List to track selected product IDs
+    private List<Integer> selectedItemsQty;
     public CartAdapter(Context context, List<SanPham> sanPhamList, GioHang giohang) {
         this.context = context;
         this.sanPhamList = sanPhamList;
         this.gioHang = giohang;
+        this.selectedItems = new ArrayList<>(); // Initialize as an empty list
+        this.selectedItemsQty = new ArrayList<>();
     }
 
     @Override
@@ -52,8 +57,9 @@ public class CartAdapter extends BaseAdapter {
         }
 
         ImageView imgAnhSanPham = view.findViewById(R.id.imgPCart);
-        TextView txtTenSanPham = view.findViewById(R.id.txtNameCart);
-        TextView txtGiaBan = view.findViewById(R.id.txtPriceCart);
+        TextView txtTenSanPham = view.findViewById(R.id.txtNameCartItem);
+        TextView txtGiaBan = view.findViewById(R.id.txtPriceCartItem);
+        CheckBox checkBox = view.findViewById(R.id.checkBox4); // Ensure this CheckBox exists in your layout
 
         SanPham sanPham = sanPhamList.get(i);
 
@@ -75,13 +81,28 @@ public class CartAdapter extends BaseAdapter {
         // Xử lý sự kiện cho nút "+" và "-"
         Button btnPlus = view.findViewById(R.id.btnPlus);
         Button btnMinus = view.findViewById(R.id.btnMinus);
-        TextView qty = view.findViewById(R.id.txtQty);
+        TextView qty = view.findViewById(R.id.txtQtyCart);
         btnPlus.setOnClickListener(v -> {
             int sl= Integer.parseInt(qty.getText().toString());
             qty.setText(String.valueOf(sl+1));
             notifyDataSetChanged();
         });
+// Set checkbox state
+        checkBox.setChecked(selectedItems.contains(sanPham.getMaSanPham())); // Check if this product is selected
 
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Add to selected items if checked
+                if (!selectedItems.contains(sanPham.getMaSanPham())) {
+                    selectedItems.add(sanPham.getMaSanPham());
+                    selectedItemsQty.add(Integer.parseInt(qty.getText().toString()));
+                }
+            } else {
+                // Remove from selected items if unchecked
+                selectedItems.remove(Integer.valueOf(sanPham.getMaSanPham()));
+                selectedItemsQty.remove(Integer.parseInt(qty.getText().toString()));
+            }
+        });
         btnMinus.setOnClickListener(v -> {
             if (Integer.parseInt(qty.getText().toString()) > 1) { // Đảm bảo số lượng không giảm xuống dưới 1
                 int sl= Integer.parseInt(qty.getText().toString());
@@ -109,5 +130,12 @@ public class CartAdapter extends BaseAdapter {
     // Chuyển Byte thành Bitmap
     public Bitmap getBitmapFromBytes(byte[] image) {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+    // Method to get selected items
+    public List<Integer> getSelectedItems() {
+        return selectedItems;
+    }
+    public List<Integer> getSelectedItemsQty() {
+        return selectedItemsQty;
     }
 }

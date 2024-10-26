@@ -12,8 +12,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class Database extends SQLiteOpenHelper {
@@ -161,6 +164,42 @@ public class Database extends SQLiteOpenHelper {
         }
         cursor.close();
         return ketQua;
+    }
+    public String generateOrderId() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(100000); // Giới hạn số ngẫu nhiên (có thể điều chỉnh)
+        return "DH" + randomNumber; // Kết hợp "DH" với số ngẫu nhiên
+    }
+    public void insertDonHang(String maDonHang, String customerId, String orderDate, String status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("madonhang", maDonHang);
+        values.put("makhachhang", customerId);
+        values.put("ngaydathang", orderDate);
+        values.put("trangthaidonhang", status);
+
+        long result = db.insert("donhang", null, values);
+        if (result == -1) {
+            Log.e("DonHang", "Failed to add order with ID: " + maDonHang);
+        } else {
+            Log.d("DonHang", "Order added successfully with ID: " + maDonHang);
+        }
+        db.close();
+    }
+    public void insertIntoChiTietDonHang(String maDonHang, int maSanPham, int soLuong) {
+        SQLiteDatabase database = this.openDatabase(); // Assuming you have a method to open your database
+        ContentValues values = new ContentValues();
+        values.put("maDonHang", maDonHang);
+        values.put("maSanPham", maSanPham);
+        values.put("soLuong", soLuong);
+
+        long result = database.insert("ChiTietDonHang", null, values);
+        if (result == -1) {
+            Log.e("ChiTietDonHang", "Thêm chi tiết đơn hàng thất bại cho sản phẩm: " + maSanPham);
+        } else {
+            Log.d("ChiTietDonHang", "Thêm chi tiết đơn hàng thành công cho sản phẩm: " + maSanPham);
+        }
+        database.close();
     }
 
     @Override

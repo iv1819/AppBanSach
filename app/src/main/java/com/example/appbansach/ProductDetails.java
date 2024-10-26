@@ -18,9 +18,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.appbansach.model.GioHang;
 import com.example.appbansach.model.SanPham;
 
+import java.util.ArrayList;
+
 public class ProductDetails extends AppCompatActivity {
     ImageView imgBack;
-    Button themGioHang;
+    Button themGioHang, mua;
     GioHang cart;
     SanPham selectedProduct;
 
@@ -39,7 +41,7 @@ public class ProductDetails extends AppCompatActivity {
         // Get the passed product object
         selectedProduct = (SanPham) getIntent().getSerializableExtra("selected_product");
         cart = MyApplication.getInstance().getGioHang();
-
+        mua = findViewById(R.id.btnNavCart);
         // Populate your views with the product details
         if (selectedProduct != null) {
             ImageView imgAnhSanPham = findViewById(R.id.imgPdd);
@@ -52,7 +54,7 @@ public class ProductDetails extends AppCompatActivity {
             Bitmap bitmap = getBitmapFromBytes(anh);
             imgAnhSanPham.setImageBitmap(bitmap);
             txtTenSanPham.setText(selectedProduct.getTenSanPham());
-            txtSoLuong.setText(String.format("Số lượng: %s", selectedProduct.getSoLuong()));
+            txtSoLuong.setText(String.format("Quantity: %s", selectedProduct.getSoLuong()));
             txtTacGia.setText(selectedProduct.getTacGia());
             txtGiaBan.setText(String.format("%s$", selectedProduct.getGiaBan()));
         }
@@ -62,9 +64,33 @@ public class ProductDetails extends AppCompatActivity {
         });
         themGioHang.setOnClickListener(v -> {
             if (selectedProduct != null) {
-                // Thêm sản phẩm vào giỏ hàng
-                cart.addToCart(selectedProduct.getMaSanPham()); // Gọi phương thức thêm sản phẩm
-                Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                int soLuongSanPham = selectedProduct.getSoLuong();
+
+                // Kiểm tra nếu số lượng là 0
+                if (soLuongSanPham == 0) {
+                    Toast.makeText(this, "Product is out of stock!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Thêm sản phẩm vào giỏ hàng
+                    cart.addToCart(selectedProduct.getMaSanPham()); // Gọi phương thức thêm sản phẩm
+                    Toast.makeText(this, "Added the product to cart!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        mua.setOnClickListener(v -> {
+            if (selectedProduct != null) {
+                int soLuongSanPham = selectedProduct.getSoLuong();
+
+                // Kiểm tra nếu số lượng là 0
+                if (soLuongSanPham == 0) {
+                    Toast.makeText(this, "Product is out of stock!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Thêm sản phẩm vào giỏ hàng
+                    cart.addToCart(selectedProduct.getMaSanPham()); // Gọi phương thức thêm sản phẩm
+                     Intent intent = new Intent(ProductDetails.this, TrangGioHang.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

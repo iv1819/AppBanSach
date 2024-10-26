@@ -19,20 +19,50 @@ public class GioHang {
         this.customerId = customerId;
     }
 
+    public Database getDb() {
+        return db;
+    }
+
+    public void setDb(Database db) {
+        this.db = db;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     // Add product to cart
     public void addToCart(int productId) {
         SQLiteDatabase database = db.openDatabase();
-        ContentValues values = new ContentValues();
-        values.put("maSanPham", productId);
-        values.put("maKhachHang", customerId);
-        long result = database.insert("GioHang", null, values);
-        if (result == -1) {
-            Log.e("GioHang", "Thêm sản phẩm thất bại");
+
+        // Check if the product is already in the cart for the current customer
+        Cursor cursor = database.rawQuery(
+                "SELECT maSanPham FROM GioHang WHERE maSanPham = ? AND maKhachHang = ?",
+                new String[]{String.valueOf(productId), customerId}
+        );
+
+        if (cursor.getCount() == 0) { // Product is not in the cart
+            ContentValues values = new ContentValues();
+            values.put("maSanPham", productId);
+            values.put("maKhachHang", customerId);
+            long result = database.insert("GioHang", null, values);
+            if (result == -1) {
+                Log.e("GioHang", "Thêm sản phẩm thất bại");
+            } else {
+                Log.d("GioHang", "Thêm sản phẩm thành công với mã sản phẩm: " + productId + " ma khách hàng: " + customerId);
+            }
         } else {
-            Log.d("GioHang", "Thêm sản phẩm thành công với mã sản phẩm: " + productId + " ma khách hàng: " + customerId);
+            Log.d("GioHang", "Sản phẩm đã có trong giỏ hàng; không thêm.");
         }
+
+        cursor.close();
         database.close();
     }
+
 
     // Remove product from cart
     public void removeFromCart(int productId) {
