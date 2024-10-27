@@ -48,12 +48,12 @@ public class DangNhapQLy extends AppCompatActivity {
         boolean kiemTra = taiKhoan.kiemtraDangNhapQLy(sTaiKhoan, sMatKhau);
 
         if (kiemTra) {
-            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Log in success!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(DangNhapQLy.this, TrangChu.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
         }
     }
 }
