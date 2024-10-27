@@ -83,7 +83,7 @@ public class CustomUser extends AppCompatActivity {
         database.deleteUser(customerId);
 
         // Thông báo thành công
-        Toast.makeText(this, "Xóa tài khoản thành công!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Deleted!", Toast.LENGTH_SHORT).show();
 
         // Chuyển hướng về MainActivity
         Intent intent = new Intent(CustomUser.this, MainActivity.class);

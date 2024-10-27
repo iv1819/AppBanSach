@@ -35,6 +35,7 @@ public class TrangChu extends AppCompatActivity {
     List<Genre> theloaiList;
     ImageView cartna;
     ArrayList<SlideModel> imageList = new ArrayList<>();
+    private String currentGenreId = null; // Track the currently selected genre
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class TrangChu extends AppCompatActivity {
         lvSp = findViewById(R.id.lvRcd);
         recyclerView = findViewById(R.id.recyclerViewGenres);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         // Initialize ImageSlider
         initImageSlider();
 
@@ -118,6 +118,11 @@ public class TrangChu extends AppCompatActivity {
             genresAdapter = new GenresAdapter(this, theloaiList);
             recyclerView.setAdapter(genresAdapter);
         });
+        Intent intent = getIntent();
+        if (intent.hasExtra("genreId")) {
+            String genreId = intent.getStringExtra("genreId");
+            filterProductsByGenre(genreId);
+        }
     }
 
     private void loadSanPhamList() {
@@ -151,4 +156,27 @@ public class TrangChu extends AppCompatActivity {
             lvSp.setAdapter(adapter);
         });
     }
+    public void filterProductsByGenre(String genreId) {
+        if (genreId.equals(currentGenreId)) {
+            // If the same genre is clicked, clear the filter
+            currentGenreId = null; // Reset to no genre
+            // Show all products again
+            lvSp.setAdapter(new ProductAdapter(this, sanPhamList)); // Reset to original list
+        } else {
+            // Set the new current genre
+            currentGenreId = genreId;
+
+            List<SanPham> filteredProducts = new ArrayList<>();
+            for (SanPham product : sanPhamList) {
+                if (product.getTheLoai().equals(genreId)) {
+                    filteredProducts.add(product);
+                }
+            }
+
+            // Update the ListView with filtered products
+            lvSp.setAdapter(new ProductAdapter(this, filteredProducts));
+        }
+    }
+
+
 }

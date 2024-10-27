@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appbansach.ProductDetails;
 import com.example.appbansach.R;
@@ -60,7 +62,6 @@ public class CartAdapter extends BaseAdapter {
         TextView txtTenSanPham = view.findViewById(R.id.txtNameCartItem);
         TextView txtGiaBan = view.findViewById(R.id.txtPriceCartItem);
         CheckBox checkBox = view.findViewById(R.id.checkBox4); // Ensure this CheckBox exists in your layout
-
         SanPham sanPham = sanPhamList.get(i);
 
         byte[] anh = sanPham.getAnhSanPham();
@@ -88,7 +89,7 @@ public class CartAdapter extends BaseAdapter {
             notifyDataSetChanged();
         });
 // Set checkbox state
-        checkBox.setChecked(selectedItems.contains(sanPham.getMaSanPham())); // Check if this product is selected
+        checkBox.setChecked(selectedItems.contains(sanPham.getMaSanPham()));
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -102,6 +103,7 @@ public class CartAdapter extends BaseAdapter {
                 selectedItems.remove(Integer.valueOf(sanPham.getMaSanPham()));
                 selectedItemsQty.remove(Integer.parseInt(qty.getText().toString()));
             }
+
         });
         btnMinus.setOnClickListener(v -> {
             if (Integer.parseInt(qty.getText().toString()) > 1) { // Đảm bảo số lượng không giảm xuống dưới 1

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,8 @@ public class ProductAdapter extends BaseAdapter {
 
         // First product for the current row (always present)
         SanPham product1 = sanPhamList.get(position * 2);
+        Log.d("ImageDataCheck", "Image data length: " + (product1.getAnhSanPham() != null ? product1.getAnhSanPham().length : "null"));
+
         imgPrd1.setImageBitmap(getBitmapFromBytes(product1.getAnhSanPham()));
         txtNamePD1.setText(product1.getTenSanPham());
         txtPricePD1.setText(String.format("%s$", product1.getGiaBan()));
@@ -76,6 +79,8 @@ public class ProductAdapter extends BaseAdapter {
         // Second product for the current row (may not exist)
         if (position * 2 + 1 < sanPhamList.size()) {
             SanPham product2 = sanPhamList.get(position * 2 + 1);
+            Log.d("ImageDataCheck", "Image data length: " + (product1.getAnhSanPham() != null ? product1.getAnhSanPham().length : "null"));
+
             imgPrd2.setImageBitmap(getBitmapFromBytes(product2.getAnhSanPham()));
             txtNamePD2.setText(product2.getTenSanPham());
             txtPricePD2.setText(String.format("%s$", product2.getGiaBan()));
@@ -102,9 +107,14 @@ public class ProductAdapter extends BaseAdapter {
     }
 
 
-    // Convert byte array to bitmap (unchanged)
+    // Convert byte array to bitmap with null check
     private Bitmap getBitmapFromBytes(byte[] image) {
+        if (image == null || image.length == 0) {
+            // Return a default or placeholder image if image data is null
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.grey_bg);
+        }
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
+
 }
 

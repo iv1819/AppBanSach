@@ -217,11 +217,11 @@ public class Database extends SQLiteOpenHelper {
         String[] userInfo = null; // Mảng để lưu thông tin người dùng
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT khachhang.sdt, khachhang.diachi, " +
-                "taikhoankhachhang.taikhoan, taikhoankhachhang.matkhau " +
-                "FROM khachhang " +
-                "JOIN taikhoankhachhang ON khachhang.makhachhang = taikhoankhachhang.makhachhang " +
-                "WHERE khachhang.makhachhang = ?"; // Sử dụng ? để tránh SQL Injection
+        String query = "SELECT KhachHang.soDienThoai, KhachHang.diaChi, " +
+                "TaiKhoanKhachHang.taiKhoan, TaiKhoanKhachHang.matKhau " +
+                "FROM KhachHang " +
+                "JOIN TaiKhoanKhachHang ON KhachHang.maKhachHang = TaiKhoanKhachHang.maKhachHang " +
+                "WHERE KhachHang.maKhachHang = ?"; // Sử dụng ? để tránh SQL Injection
 
         Cursor cursor = db.rawQuery(query, new String[]{customerId});
         if (cursor.moveToFirst()) {
@@ -240,15 +240,15 @@ public class Database extends SQLiteOpenHelper {
 
         // Cập nhật bảng khachhang
         ContentValues values = new ContentValues();
-        values.put("sdt", phone);
+        values.put("soDienThoai", phone);
         values.put("diachi", address);
-        db.update("khachhang", values, "makhachhang = ?", new String[]{customerId});
+        db.update("khachhang", values, "maKhachHang = ?", new String[]{customerId});
 
         // Cập nhật bảng taikhoankhachhang
         ContentValues accountValues = new ContentValues();
         accountValues.put("taikhoan", username);
         accountValues.put("matkhau", password);
-        db.update("taikhoankhachhang", accountValues, "makhachhang = ?", new String[]{customerId});
+        db.update("taikhoankhachhang", accountValues, "maKhachHang = ?", new String[]{customerId});
 
         db.close();
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class TrangThanhToan extends AppCompatActivity {
     private Database db;
     private List<SanPham> sanPhamList; // List to hold the products to be displayed
     private TextView txtTotalPrice; // TextView to display total price
-
+    EditText txtName, txtAddress, txtPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,9 @@ public class TrangThanhToan extends AppCompatActivity {
             return insets;
         });
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
-
+        txtName = findViewById(R.id.txtNamePayment);
+        txtAddress = findViewById(R.id.txtAddressPaymant);
+        txtPhone = findViewById(R.id.txtPhonePayment);
         lvOrder = findViewById(R.id.lvOrder);
         db = new Database(this); // Initialize your database here
         sanPhamList = new ArrayList<>(); // Initialize the product list
@@ -67,7 +70,16 @@ public class TrangThanhToan extends AppCompatActivity {
                 }
             }
         }
+        String customerId = MyApplication.getInstance().getGioHang().getCustomerId();
 
+        String[] userInfo = db.getUserByCustomerId(customerId);
+
+        // Điền thông tin vào các EditText
+        if (userInfo != null) {
+            txtPhone.setText(userInfo[0]); // SĐT
+            txtAddress.setText(userInfo[1]); // Địa chỉ
+            txtName.setText(userInfo[2]); // Tài khoản
+        }
         // Initialize the adapter with the fetched products and quantities
         orderAdapter = new OrderAdapter(this, sanPhamList, selectedItemsQty);
         lvOrder.setAdapter(orderAdapter);
@@ -78,7 +90,6 @@ public class TrangThanhToan extends AppCompatActivity {
         btnPay.setOnClickListener(v -> {
             GioHang gioHang = new GioHang(db, MyApplication.getInstance().getGioHang().getCustomerId());
 
-            String customerId = MyApplication.getInstance().getGioHang().getCustomerId();
             String maDonHang = generateOrderId();
             String orderDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
             String status = "Chờ duyệt";

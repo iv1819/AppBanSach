@@ -55,11 +55,20 @@ public class TrangGioHang extends AppCompatActivity {
         });
 
         btnBuy.setOnClickListener(v -> {
-            Intent intent = new Intent(TrangGioHang.this, TrangThanhToan.class);
-            intent.putIntegerArrayListExtra("selectedItems", new ArrayList<>(cartAdapter.getSelectedItems()));
-            intent.putIntegerArrayListExtra("selectedItemsQty", new ArrayList<>(cartAdapter.getSelectedItemsQty()));
-            startActivity(intent);
-            finish();
+            // Check if there are selected items
+            List<Integer> selectedItems = cartAdapter.getSelectedItems();
+            List<Integer> selectedItemsQty = cartAdapter.getSelectedItemsQty();
+
+            if (selectedItems.isEmpty()) {
+                // Show a message to the user
+                Toast.makeText(TrangGioHang.this, "Choose one or more products!", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(TrangGioHang.this, TrangThanhToan.class);
+                intent.putIntegerArrayListExtra("selectedItems", new ArrayList<>(selectedItems));
+                intent.putIntegerArrayListExtra("selectedItemsQty", new ArrayList<>(selectedItemsQty));
+                startActivity(intent);
+                finish();
+            }
         });
     }
 }

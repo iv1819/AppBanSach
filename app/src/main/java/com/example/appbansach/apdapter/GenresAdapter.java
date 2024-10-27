@@ -1,6 +1,7 @@
 package com.example.appbansach.apdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbansach.R;
+import com.example.appbansach.TrangChu;
 import com.example.appbansach.model.Genre;
 import com.example.appbansach.model.SanPham;
 
@@ -36,6 +38,11 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenreViewH
     public void onBindViewHolder(@NonNull GenreViewHolder holder, int position) {
         Genre genre = list.get(position);
         holder.txtGen.setText(genre.getTentheloai());
+        // Handle genre click directly here
+        holder.itemView.setOnClickListener(v -> {
+            // Call the method in TrangChu to filter products
+            ((TrangChu) context).filterProductsByGenre(genre.getTentheloai());
+        });
     }
 
     @Override
